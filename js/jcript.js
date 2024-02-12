@@ -1,46 +1,84 @@
-// Clase para los productos
-class Producto {
-    constructor(id, nombre, precio) {
-        this.id = id;
-        this.nombre = nombre;
-        this.precio = precio;
+//Calcular el costo total de la compra con descuentos
+function calcularCostoTotal(cantidadSandwiches, cantidadBebidas, descuento) {
+    const precioSandwich = 3500;
+    const precioBebida = 1250;
+  
+    let costoSandwiches = cantidadSandwiches * precioSandwich;
+    let costoBebidas = cantidadBebidas * precioBebida;
+  
+    let costoTotal = costoSandwiches + costoBebidas;
+    
+    // Descuento si es válido
+    if (descuento > 0 && descuento <= 100) {
+      const descuentoAplicado = (descuento / 100) * costoTotal;
+      costoTotal -= descuentoAplicado;
     }
-}
-
-// Instancias de la clase Producto
-const paletaProfesional = new Producto(1, 'Paleta Profesional', 220990);
-const paletaAmateur = new Producto(2, 'Paleta Amateur', 120990);
-const paletaJunior = new Producto(3, 'Paleta Junior', 90990);
-
-// Array para el carrito
-const carrito = [];
-
-// Función para agregar productos al carrito
-function agregarAlCarrito(producto) {
-    carrito.push(producto);
-    console.log(`${producto.nombre} agregada al carrito.`);
-}
-
-// Función para calcular el total del carrito
-function calcularTotal() {
-    let total = 0;
-
-    // Aca uso un bucle while para sumar los precios ( Puede ser?)
-    let i = 0;
-    while (i < carrito.length) {
-        total += carrito[i].precio;
-        i++;
+    
+    return costoTotal;
+  }
+  
+  // Validar la cantidad ingresada
+  function validarCantidad(cantidad) {
+    return !isNaN(cantidad) && cantidad >= 0 && cantidad % 1 === 0;
+  }
+  
+  // Realizar la compra
+  function realizarCompra() {
+    let cantidadSandwiches;
+    let cantidadBebidas;
+    let descuento;
+    let email;
+    let direccionEntrega;
+    
+  
+    alert("¡Bienvenido a la sangucheria del placer!");
+  
+    // Solicitar la cantidad de sandwiches
+    while (true) {
+      cantidadSandwiches = parseInt(prompt("Estimado usuario: Ingrese la cantidad de sandwiches que desea comprar:"));
+      if (validarCantidad(cantidadSandwiches)) {
+        break;
+      }
+      alert("Estimado usuario: La cantidad ingresada no es válida. Por favor ingrese un número entero positivo.");
     }
-
-    // if para verificar el total y mostrar un mensaje
-    if (total > 0) {
-        console.log(`Total a pagar: ${total.toFixed(2)} CLP.`);
-    } else {
-        console.log('El carrito está vacío. Agrega productos antes de calcular el total.');
+  
+    // Solicitar la cantidad de bebidas
+    while (true) {
+      cantidadBebidas = parseInt(prompt("Estimado usuario: Ingrese la cantidad de bebidas que desea comprar:"));
+      if (validarCantidad(cantidadBebidas)) {
+        break;
+      }
+      alert("Estimado usuario: La cantidad ingresada no es válida. Por favor ingrese un número entero positivo.");
     }
-}
-
-// Agrego algunos productos al carrito al cargar la página. 
-agregarAlCarrito(paletaProfesional);
-agregarAlCarrito(paletaAmateur);
-agregarAlCarrito(paletaJunior);
+  
+    // Solicitar el descuento
+    while (true) {
+      descuento = parseInt(prompt("Estimado usuario: Ingrese el porcentaje de descuento que tiene (0 si no tiene descuento):"));
+      if (validarCantidad(descuento)) {
+        break;
+      }
+      alert("El descuento ingresado no es válido. Por favor ingrese un número entero positivo.");
+    }
+  
+    // Solicitar el email para enviar la factura de compra
+    email = prompt("Estimado usuario: Por favor, ingrese su dirección de correo electrónico para recibir la factura:");
+  
+    // Solicitar la dirección de entrega
+    direccionEntrega = prompt("Estimado usuario: Por favor, ingrese la dirección de entrega de su pedido:");
+    
+  
+    // Calcular el costo total
+    const costoTotal = calcularCostoTotal(cantidadSandwiches, cantidadBebidas, descuento);
+  
+    // Mostrar el resultado y la información de entrega
+    alert(`El costo total de su compra es: $${costoTotal}. La factura será enviada a su dirección de correo electrónico: ${email}. Su pedido será entregado en la dirección: ${direccionEntrega}. Su pedido ya se encuentra en preparación y llegará entre las 18hs y las 19:30hs. ¡Muchas gracias por su compra!`);
+    console.log(`Compra realizada: ${cantidadSandwiches} sandwiches y ${cantidadBebidas} bebidas.`);
+    console.log(`Descuento aplicado: ${descuento}%`);
+    console.log(`Costo total: $${costoTotal}`);
+    console.log(`Dirección de entrega: ${direccionEntrega}`);
+    console.log(`Pedido en preparación y llegará entre las 18hs y las 19:30hs.`);
+  }
+  
+  // Realizar la compra
+  realizarCompra();
+  
